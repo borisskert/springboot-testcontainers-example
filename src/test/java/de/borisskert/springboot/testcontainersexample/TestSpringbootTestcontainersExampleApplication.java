@@ -17,7 +17,7 @@ public class TestSpringbootTestcontainersExampleApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.from(SpringbootTestcontainersExampleApplication::main).with(TestSpringbootTestcontainersExampleApplication.class).run(args);
+		SpringApplication.from(ExampleApplication::main).with(TestSpringbootTestcontainersExampleApplication.class).run(args);
 	}
 
 }
