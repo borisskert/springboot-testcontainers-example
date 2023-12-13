@@ -1,0 +1,38 @@
+### Create character 'Frodo'
+POST {{backend_url}}/characters
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Frodo",
+  "race": "hobbit"
+}
+
+> {%
+    client.test("Response status OK", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+%}
+
+### Search for character 'Frodo'
+GET {{backend_url}}/characters?race=hobbit
+Accept: application/json
+
+> {%
+    client.test("Response status OK", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+    });
+
+    let foundCharacters = response.body;
+
+    client.test("Response body contains 1 character", function () {
+        client.assert(foundCharacters.length === 1, `Response body does not contain 1 character: was ${foundCharacters.length}`);
+    });
+
+    let frodo = foundCharacters[0];
+
+    client.test("Response body contains 'Frodo' which is a 'hobbit'", function () {
+        client.assert(frodo.name === 'Frodo', "Response body does not contain 'Frodo'");
+        client.assert(frodo.race === 'hobbit', "Response body does not contain 'hobbit'")
+    });
+%}
